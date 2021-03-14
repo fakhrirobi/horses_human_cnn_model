@@ -6,6 +6,17 @@ import os
 import tensorflow as tf 
 import numpy as np 
 
+#Handling CUBLAS fail to initialize
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+    except RuntimeError as e:
+        print(e)
+
 from tkinter import filedialog
 LARGEFONT =("Montserrat", 20) 
 NORMALFONT = ("Montserrat", 10)
@@ -18,18 +29,21 @@ class Path() :
         return path
 
 class Model() : 
-    model = tf.keras.models.load_model('horse_human.h5')
+    def __init__(self) : 
+        self.model = tf.keras.models.load_model('horse_human.h5')
     def classify(self) : 
+        filename = [x for x in path.split('/')]
+        filename = filename[-1]
         img = tf.keras.preprocessing.image.load_img(path,target_size=(300,300,3))
         x  = tf.keras.preprocessing.image.img_to_array(img)
         image_tensor = np.expand_dims(x,axis=0)
-        classes = model.predict(image_tensor)
+        classes = self.model.predict(image_tensor)
         prediction_text = list()
         if classes[0] > 0.5 : 
-            prediction_text.append(path+' is  detected as a human') 
+            prediction_text.append(filename+' is  detected as a human') 
         else : 
-            prediction_text.append(path+' is detected as a horse') 
-        return prediction_text
+            prediction_text.append(filename+' is detected as a horse') 
+        return prediction_text[0]
     # first window frame MainMenu 
 
 class tkinterApp(Tk): 
@@ -76,12 +90,18 @@ class MainMenu(Frame):
 
         def show_result(): 
             model = Model()
-            prediction_result = model.classify()
-            Output.insert(END, prediction_result) 
+            classification_result = model.classify()
+            #check if the Output box already display prior result 
+            prior_classification= Output.get("1.0", END)
+            if prior_classification == '' :
+                Output.insert(END, classification_result) 
+            else :
+                Output.delete("1.0", "end-1c") 
+                Output.insert(END, classification_result) 
 
 
     # label of frame Layout 2 
-        label = Label(self, text ="Horse and Human Classifier using Convolutional Neural Network ", font = LARGEFONT) 
+        label = Label(self, text ="Horse and Human Classifier Using  Convolutional Neural Network ", font = LARGEFONT) 
 
         # putting the grid in its place by using 
         # grid 
@@ -89,7 +109,7 @@ class MainMenu(Frame):
 
         button1 = Button(self, text ='Pick an Image!',command = PATH.file_path,width=30,font=NORMALFONT) 
         button2 = Button(self,text='Show The Result', command = show_result,width=30,font=NORMALFONT)
-        Output = Text(self, height = 5,  width = 30) 
+        Output = Text(self, height = 5,  width = 30,font=NORMALFONT) 
 
 
 
