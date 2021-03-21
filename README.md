@@ -68,14 +68,18 @@
    python app.py
    ```
 5. The Tkinter Dialog Box Will Show Up 
-6. 
-   ![Tkiner Dialog Box](https://github.com/fakhrirobi/horses_human_cnn_model/tree/main/assets/tkinter_display.png)
-7. Click Pick an Image! and the file explorer dialog will appear,and select the image you want to classify
+   
+   ![Tkiner Dialog Box](https://github.com/fakhrirobi/horses_human_cnn_model/blob/main/assets/tkinter_display.png)
+6. Click Pick an Image! and the file explorer dialog will appear,and select the image you want to classify
+   
    ![Pick Image](https://github.com/fakhrirobi/horses_human_cnn_model/blob/main/assets/pick_image.png)
-8. Click Show The Image to Display the Image
+7. Click Show The Image to Display the Image
+   
    ![Pick Image](https://github.com/fakhrirobi/horses_human_cnn_model/blob/main/assets/show_image.png)
-9. Click Show The Result to Classify the Image,Eventually The Text Ouput Will Appear
+8. Click Show The Result to Classify the Image,Eventually The Text Ouput Will Appear
+   
    ![Pick Image](https://github.com/fakhrirobi/horses_human_cnn_model/blob/main/assets/show_result.png)
+
 9.Done!
 
 
