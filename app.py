@@ -5,7 +5,8 @@ from time import sleep
 import os 
 import tensorflow as tf 
 import numpy as np 
-
+from PIL import Image, ImageTk
+from tkinter import filedialog
 #Handling CUBLAS fail to initialize
 gpus = tf.config.experimental.list_physical_devices('GPU')
 if gpus:
@@ -17,7 +18,28 @@ if gpus:
     except RuntimeError as e:
         print(e)
 
-from tkinter import filedialog
+def display_picture(): 
+    # Toplevel object which will  
+    # be treated as a new window 
+    newWindow = Tk()
+    newWindow.geometry("200x200")
+  
+    # sets the title of the 
+    # Toplevel widget 
+    newWindow.title(path) 
+  
+    # sets the geometry of toplevel 
+    newWindow.geometry("200x200") 
+    load = Image.open(path)
+    load = load.resize((200, 200), Image.ANTIALIAS)
+    render = ImageTk.PhotoImage(load,master=newWindow)
+    img = Label(newWindow, image=render)
+    img.image = render
+    img.place(x=0, y=0)
+
+
+
+
 LARGEFONT =("Montserrat", 20) 
 NORMALFONT = ("Montserrat", 10)
 class Path() :
@@ -100,6 +122,7 @@ class MainMenu(Frame):
                 Output.insert(END, classification_result) 
 
 
+
     # label of frame Layout 2 
         label = Label(self, text ="Horse and Human Classifier Using  Convolutional Neural Network ", font = LARGEFONT) 
 
@@ -108,7 +131,8 @@ class MainMenu(Frame):
         label.grid(row = 0, column = 1, padx = 10, pady = 10) 
 
         button1 = Button(self, text ='Pick an Image!',command = PATH.file_path,width=30,font=NORMALFONT) 
-        button2 = Button(self,text='Show The Result', command = show_result,width=30,font=NORMALFONT)
+        button2 = Button(self,text='Show The Image', command = display_picture,width=30,font=NORMALFONT)
+        button3 = Button(self,text='Show The Result', command = show_result,width=30,font=NORMALFONT)
         Output = Text(self, height = 5,  width = 30,font=NORMALFONT) 
 
 
@@ -117,7 +141,8 @@ class MainMenu(Frame):
         # using grid 
         button1.grid(row=1,column=1, sticky=W+E) 
         button2.grid(row=2,column=1, sticky=W+E)
-        Output.grid(row=3,column=1, sticky=W+E)
+        button3.grid(row=3,column=1, sticky=W+E)
+        Output.grid(row=4,column=1, sticky=W+E)
 
 
 
