@@ -70,8 +70,15 @@
 5. The Tkinter Dialog Box Will Show Up 
    ![Tkiner Dialog Box](assets\tkinter_display.png)
 6. Click Pick an Image! and the file explorer dialog will appear,and select the image you want to classify
-   ![Tkiner Dialog Box](assets\tkinter_display.png)
-7. 
+   ![Pick Image](assets\pick_image.png)
+7. Click Show The Image to Display the Image
+   ![Pick Image](assets\show_image.png)
+8. Click Show The Result to Classify the Image,Eventually The Text Ouput Will Appear
+   ![Pick Image](assets\show_result.png)
+9.Done!
+
+
+
 
 
 
